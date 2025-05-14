@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Vocabulary Management - LanguagePal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card bg-dark">
+            <div class="card-header">
+                <h2 class="text-center mb-0">Create Vocabulary List</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('vocabulary') }}">
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Vocabulary List Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Give your vocabulary list a name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="language" class="form-label">Language</label>
+                        <select class="form-select" id="language" name="language" required>
+                            {% for language in languages %}
+                            <option value="{{ language }}">{{ language }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="card mb-3 bg-dark border-secondary">
+                        <div class="card-header">
+                            <h5 class="mb-0">Add Vocabulary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="vocabulary" class="form-label">Vocabulary (one word or phrase per line)</label>
+                                <textarea class="form-control" id="vocabulary" name="vocabulary" rows="10" placeholder="Enter one word or phrase per line, or separate with commas" required></textarea>
+                                <div class="form-text">
+                                    Enter vocabulary words or phrases, one per line.
+                                    Examples:
+                                    <div class="mt-1">
+                                        <code>hello, goodbye, thank you</code>
+                                    </div>
+                                    <div class="mt-1">
+                                        <code>apple<br>banana<br>orange</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Save Vocabulary List</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card bg-dark mt-4">
+            <div class="card-header">
+                <h3 class="mb-0">My Vocabulary Lists</h3>
+            </div>
+            <div class="card-body">
+                <div id="vocabulary-lists-container">
+                    <div class="text-center p-4 text-muted" id="no-vocab-message">
+                        <i class="bi bi-card-list display-4 mb-3"></i>
+                        <h4>No vocabulary lists yet</h4>
+                        <p>Create your first vocabulary list using the form above.</p>
+                    </div>
+                    <div id="vocabulary-lists" class="row g-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/storage.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vocabulary.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}LanguagePal - Offline{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-secondary">
+                <div class="card-header bg-dark text-white">
+                    <h4><i class="bi bi-wifi-off me-2"></i>You're Offline</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-cloud-slash display-1 text-muted"></i>
+                    </div>
+                    <h5 class="card-title text-center">No Internet Connection</h5>
+                    <p class="card-text text-center">
+                        You are currently offline. Some features of LanguagePal require an internet connection.
+                    </p>
+                    <p class="text-center">
+                        <button class="btn btn-primary" onclick="window.location.reload()">
+                            <i class="bi bi-arrow-clockwise me-1"></i> Try Again
+                        </button>
+                    </p>
+                    <div class="alert alert-info mt-4">
+                        <h6><i class="bi bi-lightbulb me-2"></i>Tip:</h6>
+                        <p class="mb-0">
+                            You can still access some previously loaded content. When your connection is restored, all features will be available again.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

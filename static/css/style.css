@@ -1,0 +1,92 @@
+/* Custom styles for the language learning chat app */
+
+/* Chat messages container */
+#chat-messages {
+    height: 60vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    padding: 1rem;
+}
+
+/* User and assistant message styling */
+.user-message .message-content {
+    max-width: 80%;
+    border-radius: 1rem 1rem 0 1rem !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    word-break: break-word;
+}
+
+.assistant-message .message-content {
+    max-width: 80%;
+    border-radius: 1rem 1rem 1rem 0 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    word-break: break-word;
+}
+
+/* Conversation history styling */
+#conversation-history {
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.conversation-item {
+    transition: all 0.2s ease;
+}
+
+.conversation-item:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Vocabulary card styling */
+.vocabulary-sample {
+    max-height: 80px;
+    overflow-y: auto;
+}
+
+/* Analysis modal styling */
+#analysis-content {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    #chat-messages {
+        height: 50vh;
+    }
+    
+    .user-message .message-content,
+    .assistant-message .message-content {
+        max-width: 90%;
+    }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Footer styling */
+.footer {
+    margin-top: 3rem !important;
+}
+
+/* Make sure buttons in chat have appropriate spacing */
+.analyze-btn {
+    font-size: 0.75rem;
+}

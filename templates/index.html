@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}LanguagePal - Learn Languages through Chat{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 text-center">
+            <h1 class="display-4 mb-4">Learn Languages Through Natural Chat</h1>
+            <p class="lead mb-5">
+                Practice speaking and writing in a new language using your own vocabulary at your own pace.
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <div class="card bg-dark">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <i class="bi bi-translate display-1 text-primary me-3"></i>
+                        <div>
+                            <h2>Start Practicing Today</h2>
+                            <p class="text-muted mb-0">
+                                Create your vocabulary lists and begin chats in your target language.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{{ url_for('chat') }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-chat-dots me-2"></i>Start Chatting
+                        </a>
+                        <a href="{{ url_for('vocabulary') }}" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-list-ul me-2"></i>Create Vocabulary
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark border-secondary">
+                <div class="card-body text-center">
+                    <i class="bi bi-card-list display-4 text-info mb-3"></i>
+                    <h3 class="card-title">
+                        <a href="{{ url_for('vocabulary') }}" class="text-info text-decoration-none">Custom Vocabulary</a>
+                    </h3>
+                    <p class="card-text">
+                        Create your own custom word lists to practice with and gradually expand your vocabulary.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark border-secondary">
+                <div class="card-body text-center">
+                    <i class="bi bi-chat-square-text display-4 text-info mb-3"></i>
+                    <h3 class="card-title">Natural Chats</h3>
+                    <p class="card-text">
+                        Practice real chats with an AI language tutor that adapts to your vocabulary level.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark border-secondary">
+                <div class="card-body text-center">
+                    <i class="bi bi-lightbulb display-4 text-info mb-3"></i>
+                    <h3 class="card-title">Linguistic Insights</h3>
+                    <p class="card-text">
+                        Get detailed breakdowns of grammar, vocabulary, and cultural context for deeper understanding.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-8 mx-auto">
+            <div class="card bg-dark border-secondary">
+                <div class="card-header">
+                    <h3 class="mb-0">Supported Languages</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Spanish</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>French</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>German</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Italian</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Portuguese</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Russian</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Japanese</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Chinese</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                <span>Korean</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

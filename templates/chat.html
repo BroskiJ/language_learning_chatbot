@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}Chat - LanguagePal{% endblock %}
+
+{% block styles %}
+<style>
+    /* Custom styles for the chat interface */
+    .chat-container {
+        height: calc(100vh - 250px);
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat-messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 1rem;
+    }
+    
+    .chat-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .chat-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+    }
+    
+    .message-bubble {
+        max-width: 80%;
+        border-radius: 1rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .user-message {
+        margin-left: auto;
+        background-color: var(--bs-primary);
+        color: white;
+        border-radius: 1rem 1rem 0 1rem;
+    }
+    
+    .assistant-message {
+        margin-right: auto;
+        background-color: var(--bs-dark);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--bs-light);
+        border-radius: 1rem 1rem 1rem 0;
+    }
+    
+    /* Badge dropdown stylings */
+    .language-badge {
+        cursor: pointer;
+    }
+    
+    .vocabulary-badge {
+        cursor: pointer;
+    }
+    
+    /* Ensure the input field has proper styling */
+    #message-input {
+        border-radius: 20px 0 0 20px;
+    }
+    
+    /* Style the send button */
+    .send-button {
+        border-radius: 0 20px 20px 0;
+    }
+    
+    /* Popup translation */
+    .translation-popup {
+        position: absolute;
+        z-index: 1050;
+        max-width: 300px;
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Main Chat Interface -->
+<div class="container mt-4">
+    <div class="card bg-dark chat-container">
+        <!-- Chat Header -->
+        <div class="card-header chat-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <h5 class="mb-0 me-2">Chat</h5>
+                </div>
+                
+                <!-- Settings Button -->
+                <div class="dropdown settings-dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" 
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-gear me-1"></i> Settings
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end p-3">
+                        <form id="chat-settings-form">
+                            <!-- Language Selection -->
+                            <div class="mb-3">
+                                <label for="language-select" class="form-label">Language</label>
+                                <select id="language-select" class="form-select form-select-sm">
+                                    {% for language in languages %}
+                                    <option value="{{ language }}">{{ language }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <!-- Vocabulary Selection -->
+                            <div class="mb-3">
+                                <label for="vocabulary-select" class="form-label">Vocabulary List</label>
+                                <select id="vocabulary-select" class="form-select form-select-sm">
+                                    <option value="">No vocabulary restriction</option>
+                                    {% if vocabulary_lists %}
+                                        {% for vocab in vocabulary_lists %}
+                                        <option value="{{ vocab.id }}">{{ vocab.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                <div class="mt-2">
+                                    <a href="{{ url_for('vocabulary') }}" class="text-info small">
+                                        <i class="bi bi-plus-circle me-1"></i>Create Custom Vocabulary
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Chat Control Buttons -->
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-sm btn-outline-light" id="new-chat-btn">
+                                    <i class="bi bi-plus-circle me-1"></i>New Chat
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" id="reset-chat-btn">
+                                    <i class="bi bi-trash me-1"></i>Reset Chat
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Messages Area -->
+        <div class="card-body chat-messages" id="chat-messages">
+            <div class="text-center p-5 text-muted">
+                <i class="bi bi-chat-dots display-1 mb-3"></i>
+                <h4>Chat Ready</h4>
+                <p>Type a message below to begin chatting in Spanish.</p>
+                
+                <!-- Chat Action Buttons -->
+                <div class="d-flex justify-content-center mt-4 gap-2">
+                    <a href="{{ url_for('chat') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-plus-circle me-1"></i> New Chat
+                    </a>
+                    <button id="reset-chat-btn-main" class="btn btn-outline-danger">
+                        <i class="bi bi-trash me-1"></i> Reset Chat
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Message Input Area -->
+        <div class="card-footer chat-footer">
+            <form id="message-form">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="message-input" placeholder="Type your message...">
+                    <button class="btn btn-primary send-button" type="submit">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Message Analysis Modal -->
+<div class="modal fade" id="analysisModal" tabindex="-1" aria-labelledby="analysisModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="analysisModalLabel">Language Analysis</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center p-3" id="analysis-loading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Generating analysis...</p>
+                </div>
+                <div id="analysis-content" class="d-none"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="{{ url_for('static', filename='js/storage.js') }}?v={{ now }}"></script>
+<script src="{{ url_for('static', filename='js/chat.js') }}?v={{ now }}"></script>
+{% endblock %}
