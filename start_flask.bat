@@ -21,3 +21,4 @@ start "" "http://localhost:%FLASK_PORT%/"
 
 REM Notify that the server and browser should be running
 echo Flask server is running and browser should be open.
+pause
