@@ -4,8 +4,8 @@ set "FLASK_APP_DIR=%cd%"
 REM Set the Flask server port
 set "FLASK_PORT=5000"
 
-REM Activate the language_learning_chatbot environment (assumes env is in a subfolder of cwd)
-call "C:\Users\Elijah\Anaconda3\envs\language_learning_chatbot\Scripts\activate.bat"
+REM Activate the language_learning_chatbot environment using conda
+call conda activate language_learning_chatbot
 
 REM Start the Flask server in a new command window
 echo Starting Flask server...
@@ -21,4 +21,3 @@ start "" "http://localhost:%FLASK_PORT%/"
 
 REM Notify that the server and browser should be running
 echo Flask server is running and browser should be open.
-pause
