@@ -24,9 +24,16 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 # Configure module logger
 logger = logging.getLogger(__name__)
 
-# Load the Google Gemini API key from environment variables
-# This is the only source for the API key - no client-side API key management
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+# Load the Google Gemini API key from a local file or environment variable
+# The file 'gemini_api_key.txt' should be placed in the project root and added to .gitignore
+def _load_gemini_api_key():
+    key_path = os.path.join(os.path.dirname(__file__), "gemini_api_key.txt")
+    if os.path.exists(key_path):
+        with open(key_path, "r", encoding="utf-8") as f:
+            return f.read().strip()
+    return os.environ.get("GEMINI_API_KEY", "")
+
+GEMINI_API_KEY = _load_gemini_api_key()
 
 # Dictionary to store conversation memories for each user/guest session
 # Keys are session IDs, values are ConversationBufferMemory instances
