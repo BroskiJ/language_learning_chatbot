@@ -1,11 +1,11 @@
 @echo off
-REM Set the Flask application directory
-set "FLASK_APP_DIR=C:\Users\Elijah\Projects\LanguageLearningChatbot"
+REM Set the Flask application directory to the current working directory
+set "FLASK_APP_DIR=%cd%"
 REM Set the Flask server port
 set "FLASK_PORT=5000"
 
-REM Activate the language_learning_chatbot environment
-call "%FLASK_APP_DIR%\..\language_learning_chatbot\Scripts\activate.bat"
+REM Activate the language_learning_chatbot environment (assumes env is in a subfolder of cwd)
+call "C:\Users\Elijah\Anaconda3\envs\language_learning_chatbot\Scripts\activate.bat"
 
 REM Start the Flask server in a new command window
 echo Starting Flask server...
