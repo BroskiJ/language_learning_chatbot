@@ -35,6 +35,10 @@ def _load_gemini_api_key():
 
 GEMINI_API_KEY = _load_gemini_api_key()
 
+# Ensure compatibility with libraries expecting GOOGLE_API_KEY env variable
+if GEMINI_API_KEY:
+    os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
+
 # Dictionary to store conversation memories for each user/guest session
 # Keys are session IDs, values are ConversationBufferMemory instances
 # This maintains conversation history between API calls without a database
